@@ -1,17 +1,15 @@
-// src/components/Article.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Article.css';
 
-const Article = ({ article }) => {
-    console.log('Rendering article:', article);
+const Article = ({ article, removeArticle }) => {
     return (
         <div className="article-card">
-            <Link to={`/article/${article.guid}`}>
+            <Link to={`/article/${article.id}`}>
                 <div className="article-image" style={{ backgroundImage: `url(${article.enclosure?.link})` }}></div>
                 <div className="article-content">
                     <div className="article-category">{article.categories[0] || 'Uncategorized'}</div>
-                    <p >{article.title}</p>
+                    <p>{article.title}</p>
                     <p>{article.description}</p>
                     <div className="article-footer">
                         <div className="article-author">{article.author}</div>
@@ -19,6 +17,9 @@ const Article = ({ article }) => {
                     </div>
                 </div>
             </Link>
+            <button onClick={() => removeArticle(article.id)} className="remove-article-button">
+                Remove
+            </button>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-// src/contexts/FeedContext.js
+// src/context/FeedContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import { fetchRSSFeed } from '../services/rssService';
 
@@ -13,9 +13,8 @@ export const FeedProvider = ({ children }) => {
         const loadInitialFeed = async () => {
             try {
                 const initialFeed = await fetchRSSFeed('https://flipboard.com/@raimoseero/feed-nii8kd0sz.rss');
-                console.log('initialFeed',initialFeed)
                 setFeeds([initialFeed]);
-                setArticles(initialFeed.items);
+                setArticles(initialFeed.items.map(item => ({ ...item, id: item.guid || item.pubDate.slice(-2) })));
             } catch (error) {
                 console.error("Error loading initial feed", error);
             }
@@ -27,7 +26,7 @@ export const FeedProvider = ({ children }) => {
         try {
             const newFeed = await fetchRSSFeed(url);
             setFeeds([...feeds, newFeed]);
-            setArticles([...articles, ...newFeed.items]);
+            setArticles([...articles, ...newFeed.items.map(item => ({ ...item, id: item.guid || item.pubDate }))]);
         } catch (error) {
             console.error("Error adding new feed", error);
         }
@@ -40,8 +39,13 @@ export const FeedProvider = ({ children }) => {
         setArticles(updatedArticles);
     };
 
+    const removeArticle = (id) => {
+        const updatedArticles = articles.filter(article => article.id !== id);
+        setArticles(updatedArticles);
+    };
+
     return (
-        <FeedContext.Provider value={{ feeds, articles, addFeed, removeFeed }}>
+        <FeedContext.Provider value={{ feeds, articles, addFeed, removeFeed, removeArticle }}>
             {children}
         </FeedContext.Provider>
     );

@@ -20,13 +20,18 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Lolo v5</h1>
-            <input
-                type="text"
-                placeholder="Filter by category"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-            />
+      <header className="header">
+            <h1 className="title">Lolo v5</h1>
+            <div className="search-container">
+                <input
+                    className='filter'
+                    type="text"
+                    placeholder="Filer by category..."
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                />
+            </div>
+        </header>
             <div className="articles-grid">
                 {filteredArticles.map(article => (
                     <Article key={article.guid} article={article} />

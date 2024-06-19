@@ -1,29 +1,44 @@
+import React, { useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FeedContext } from '../context/FeedContext';
+import './Modal.css';
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+const ArticleModal = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { articles } = useContext(FeedContext);
 
-const ArticleModal = ({ match }) => {
-    const [content, setContent] = useState('');
+    const article = articles.find(article => article.guid === id);
 
-    useEffect(() => {
-        const fetchArticleContent = async () => {
-            try {
-                const response = await axios.post('https://uptime-mercury-api.azurewebsites.net/webparser', {
-                    url: match.params.id
-                });
-                setContent(response.data);
-            } catch (error) {
-                console.error("Error fetching article content", error);
-            }
-        };
-        fetchArticleContent();
-    }, [match.params.id]);
+    if (!article) {
+        return (
+            <div className="modal-overlay" onClick={() => navigate('/')}>
+                <div className="modal-content">
+                    <p>Article not found</p>
+                </div>
+            </div>
+        );
+    }
+
+    const closeModal = () => {
+        navigate('/');
+    };
 
     return (
-        <div className="modal">
+        <div className="modal-overlay">
+            <div className="modal-background" onClick={closeModal}></div>
             <div className="modal-content">
-                <span className="close">&times;</span>
-                <div dangerouslySetInnerHTML={{ __html: content }} />
+                <button onClick={closeModal} className="modal-close">
+                    &times;
+                </button>
+                <div className="article-image" style={{ backgroundImage: `url(${article.enclosure?.link})` }}></div>
+                <h2>{article.title}</h2>
+                <div className="modal-body">
+        
+                    <p>{article.content}</p>
+                    <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
+
+                </div>
             </div>
         </div>
     );
