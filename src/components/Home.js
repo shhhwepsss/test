@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { FeedContext } from '../context/FeedContext';
-import Article from './Article';
-import AddArticleForm from './AddArticleForm';
-import ArticleModal from './ArticleModal';
+import Article from './article/Article';
+import ArticleModal from './article/articleModal/ArticleModal';
+import AddArticleModal from './article/articleModal/addArticleModal/AddArticleModal'
 import './Home.css';
 
 const Home = () => {
     const { articles, addArticle } = useContext(FeedContext);
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
+    const [showAddArticleModal, setShowAddArticleModal] = useState(false);
 
     const handleAddArticle = (newArticle) => {
-        addArticle(newArticle); 
+        addArticle(newArticle);
+        setShowAddArticleModal(false); 
     };
 
     const handleOpenModal = (article) => {
@@ -20,6 +22,10 @@ const Home = () => {
 
     const handleCloseModal = () => {
         setSelectedArticle(null);
+    };
+
+    const handleOpenAddArticleModal = () => {
+        setShowAddArticleModal(true);
     };
 
     const filteredArticles = filter
@@ -31,7 +37,6 @@ const Home = () => {
     return (
         <div>
             <header className="header">
-                <h1 className="title">Lolo v5</h1>
                 <div className="search-container">
                     <input
                         className='filter'
@@ -40,7 +45,10 @@ const Home = () => {
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
                     />
-                </div>
+
+                    <div className='button-container'>
+                    <button className='create-article-button' onClick={handleOpenAddArticleModal}>Add new article</button>
+                </div></div>
             </header>
             <div className="articles-grid">
                 {filteredArticles.map(article => (
@@ -48,12 +56,14 @@ const Home = () => {
                 ))}
             </div>
 
-            <div className="add-article-form">
-                <h2>Add New Article</h2>
-                <AddArticleForm onSubmit={handleAddArticle} />
-            </div>
-
             {selectedArticle && <ArticleModal article={selectedArticle} closeModal={handleCloseModal} />}
+
+            {showAddArticleModal && (
+                <AddArticleModal
+                    closeModal={() => setShowAddArticleModal(false)}
+                    handleAddArticle={handleAddArticle}
+                />
+            )}
         </div>
     );
 };

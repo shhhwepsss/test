@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FeedProvider } from './context/FeedContext';
 import Home from './components/Home';
-import ArticleModal from './components/ArticleModal';
+import ArticleModal from './components/article/articleModal/ArticleModal';
 import './components/Home.css';
 
 const App = () => {

@@ -3,18 +3,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0f0f0;
     padding: 10px 20px;
-}
-.title {
-    margin: 0; 
-    font-size: 24px;
-    text-align: center;
 }
 
 .search-container {
     flex: 1; 
-    margin-left: 20px; 
 }
 
 .filter {
@@ -37,9 +30,6 @@
         margin-bottom: 10px;
     }
 
-    .search-container {
-        margin-left: 0;
-    }
 }
 
 .articles-grid {

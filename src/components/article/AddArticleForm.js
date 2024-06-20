@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddArticleForm = ({ onSubmit }) => {
+const AddArticleForm = ({ onSubmit, closeModal }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [categories, setCategories] = useState('');
@@ -16,28 +16,33 @@ const AddArticleForm = ({ onSubmit }) => {
         setCategories('');
         setAuthor('');
         setImageUrl('');
+        closeModal(); 
     };
 
     return (
-        <form onSubmit={handleSubmit} key={title}>
+        <form onSubmit={handleSubmit} className="add-article-form">
             <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Article Title *"
                 required
+                className="form-input"
             />
             <input
                 type="text"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="Image URL"
+                placeholder="Image URL *"
+                className="form-input"
+                required
             />
             <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Article Description *"
                 required
+                className="form-textarea"
             />
             <input
                 type="text"
@@ -45,6 +50,7 @@ const AddArticleForm = ({ onSubmit }) => {
                 onChange={(e) => setCategories(e.target.value)}
                 placeholder="Categories (comma-separated) *"
                 required
+                className="form-input"
             />
             <input
                 type="text"
@@ -52,8 +58,12 @@ const AddArticleForm = ({ onSubmit }) => {
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Author *"
                 required
+                className="form-input"
             />
-            <button type="submit">Add Article</button>
+            <div className="modal-footer">
+                <button type="button" onClick={closeModal} className="form-button cancel-button">Cancel</button>
+                <button type="submit" className="form-button">Add</button>
+            </div>
         </form>
     );
 };
