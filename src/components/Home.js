@@ -2,18 +2,18 @@ import React, { useContext, useState } from 'react';
 import { FeedContext } from '../context/FeedContext';
 import Article from './article/Article';
 import ArticleModal from './article/articleModal/ArticleModal';
-import AddArticleModal from './article/articleModal/addArticleModal/AddArticleModal'
+import AddArticleModal from './article/articleModal/addArticleModal/AddArticleModal';
 import './Home.css';
 
 const Home = () => {
-    const { articles, addArticle } = useContext(FeedContext);
+    const { articles, addArticle, removeArticle } = useContext(FeedContext);
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [showAddArticleModal, setShowAddArticleModal] = useState(false);
 
     const handleAddArticle = (newArticle) => {
         addArticle(newArticle);
-        setShowAddArticleModal(false); 
+        setShowAddArticleModal(false);
     };
 
     const handleOpenModal = (article) => {
@@ -45,14 +45,19 @@ const Home = () => {
                         value={filter}
                         onChange={(e) => setFilter(e.target.value)}
                     />
-
                     <div className='button-container'>
-                    <button className='create-article-button' onClick={handleOpenAddArticleModal}>Add new article</button>
-                </div></div>
+                        <button className='create-article-button' onClick={handleOpenAddArticleModal}>Add new article</button>
+                    </div>
+                </div>
             </header>
             <div className="articles-grid">
                 {filteredArticles.map(article => (
-                    <Article key={article.id} article={article} openModal={handleOpenModal} />
+                    <Article 
+                        key={article.id} 
+                        article={article} 
+                        openModal={handleOpenModal} 
+                        removeArticle={removeArticle} 
+                    />
                 ))}
             </div>
 

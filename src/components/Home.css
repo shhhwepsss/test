@@ -91,3 +91,17 @@
     }
 }
 
+.remove-article-button {
+    background-color: rgb(202, 70, 70);
+    color: white;
+    width: 100px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.remove-article-button:hover {
+    background-color: darkred;
+}

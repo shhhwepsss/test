@@ -21,12 +21,15 @@ export const FeedProvider = ({ children }) => {
     }, []);
 
     const addArticle = (newArticle) => {
-        // Assuming newArticle format matches the articles state
         setArticles([...articles, newArticle]);
     };
 
+    const removeArticle = (id) => {
+        setArticles(articles.filter(article => article.id !== id));
+    };
+
     return (
-        <FeedContext.Provider value={{ feeds, articles, addArticle }}>
+        <FeedContext.Provider value={{ feeds, articles, addArticle, removeArticle }}>
             {children}
         </FeedContext.Provider>
     );
