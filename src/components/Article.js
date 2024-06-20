@@ -2,6 +2,9 @@ import React from 'react';
 import './Article.css';
 
 const Article = ({ article, openModal }) => {
+
+
+    
     const truncateTitle = (title, maxLength) => {
         if (title.length > maxLength) {
             return title.slice(0, maxLength) + '...';
@@ -28,31 +31,8 @@ const Article = ({ article, openModal }) => {
         }
     };
 
-    const handleCardClick = async () => {
-        try {
-            const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    url: article.link, // Здесь article.link должен быть URL статьи для обработки
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch cleaned article');
-            }
-
-            const data = await response.json();
-            openModal(data); // Открывается модальное окно с очищенными данными статьи
-        } catch (error) {
-            console.error('Error fetching cleaned article:', error);
-        }
-    };
-
     return (
-        <div className="article-card" onClick={handleCardClick}>
+        <div className="article-card" onClick={() => openModal(article)}>
             <div className="article-image" style={{ 
                 backgroundImage: `url(${article.imageUrl || article.enclosure?.link})`
             }}>
