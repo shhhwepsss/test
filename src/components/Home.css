@@ -82,7 +82,7 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 300px; /* Adjust width as needed */
+    width: 300px;
 }
 
 .filter {
@@ -96,7 +96,7 @@
 
 @media (max-width: 768px) {
     .filter-container {
-        width: calc(100% - 40px); /* Adjust width for smaller screens */
+        width: calc(100% - 40px); 
         right: 20px;
     }
 }

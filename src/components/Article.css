@@ -1,15 +1,12 @@
-
 .article-card {
     display: flex;
     flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    margin: 15px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative; 
 }
 
 .article-card:hover {
@@ -18,65 +15,82 @@
 
 .article-image {
     width: 100%;
-    height: 180px;
+    height: 200px;
     background-size: cover;
     background-position: center;
 }
 
 .article-content {
-    padding: 15px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 }
-
-
 
 .article-category {
-    font-size: 0.9em;
-    color: #999;
-    margin-bottom: 5px;
-
+    position: absolute; 
+    top: 16px; 
+    left: 16px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.8em;
+    background-color: #ffc107;
 }
 
-.article-content h2 {
+.article-title {
     font-size: 1.5em;
-    margin: 10px 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.article-content p {
-    font-size: 1em;
-    color: #333;
 
-
+.article-description {
+    margin: 8px 0;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }
 
 .article-footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
-    font-size: 0.8em;
-    color: #777;
+    align-items: center;
+    margin-top: 16px;
 }
 
-.article-author {
-    font-weight: bold;
-}
-
-
-
-
-/* src/components/Article.css */
-
-/* .article-card {
-    position: relative;
+.article-author, .article-date {
+    font-size: 0.9em;
+    color: #555;
 
 }
 
-.remove-article-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: red;
+.article-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
     color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-} */
+    font-size: 0.8em;
+}
+
+.article-badge.green {
+    background-color: #28a745;
+    color: white;
+}
+
+.article-badge.black {
+    background-color: #000;
+    color: white;
+}
+
+.article-badge.yellow {
+    background-color: #9436b7;
+    color: white;
+}
+
