@@ -1,35 +1,10 @@
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 20px;
 }
 
-.search-container {
-    flex: 1; 
-}
-
 .filter {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
     text-align: center;
-}
-
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .title {
-        margin-bottom: 10px;
-    }
-
 }
 
 .articles-grid {
@@ -38,41 +13,11 @@
     gap: 8px;
 }
 
-.article-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-
-}
-
-.article-image {
-    width: 100%;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-}
-
-.article-content {
-    padding: 16px;   
-}
-
-.article-category {
-    font-size: 12px;
-    color: #999;
-}
-
 .article-footer {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
     color: #999;
-}
-.filter-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 300px;
 }
 
 .filter {
@@ -82,13 +27,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-    .filter-container {
-        width: calc(100% - 40px); 
-        right: 20px;
-    }
 }
 
 .remove-article-button {
@@ -102,6 +40,7 @@
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
+
 .remove-article-button:hover {
     background-color: darkred;
 }

@@ -6,6 +6,7 @@ export const FeedContext = createContext();
 export const FeedProvider = ({ children }) => {
     const [feeds, setFeeds] = useState([]);
     const [articles, setArticles] = useState([]);
+    console.log(feeds)
 
     useEffect(() => {
         const loadInitialFeed = async () => {
@@ -27,6 +28,8 @@ export const FeedProvider = ({ children }) => {
     const removeArticle = (id) => {
         setArticles(articles.filter(article => article.id !== id));
     };
+    
+    
 
     return (
         <FeedContext.Provider value={{ feeds, articles, addArticle, removeArticle }}>

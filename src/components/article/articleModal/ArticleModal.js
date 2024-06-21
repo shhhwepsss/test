@@ -19,7 +19,7 @@ const ArticleModal = ({ article, closeModal }) => {
                     <div className='arcicle-content'>
                     <h2>{article.title}</h2>
                     <p className="article-description">{article.description}</p>
-                    <div className="modal-body">
+                    <div>
                         <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
                     </div></div>
                 </div>

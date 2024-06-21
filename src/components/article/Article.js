@@ -2,6 +2,8 @@ import React from 'react';
 import './Article.css';
 
 const Article = ({ article, openModal, removeArticle }) => {
+
+    
     const truncateTitle = (title, maxLength) => {
         if (title.length > maxLength) {
             return title.slice(0, maxLength) + '...';

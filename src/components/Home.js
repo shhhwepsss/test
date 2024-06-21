@@ -37,7 +37,7 @@ const Home = () => {
     return (
         <div>
             <header className="header">
-                <div className="search-container">
+
                     <input
                         className='filter'
                         type="text"
@@ -48,7 +48,7 @@ const Home = () => {
                     <div className='button-container'>
                         <button className='create-article-button' onClick={handleOpenAddArticleModal}>Add new article</button>
                     </div>
-                </div>
+
             </header>
             <div className="articles-grid">
                 {filteredArticles.map(article => (

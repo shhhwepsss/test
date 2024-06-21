@@ -4,7 +4,7 @@ import './Home.css';
 
 const ArticleList = ({ articles, openModal }) => {
     return (
-        <div className="article-list">
+        <div>
             {articles.map(article => (
                 <Article
                     key={article.id}
