@@ -8,13 +8,16 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
     const [categories, setCategories] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
+    console.log('articleToEdit',articleToEdit)
+    console.log('imageUrl',imageUrl)
+
     useEffect(() => {
         if (articleToEdit) {
             setTitle(articleToEdit.title || '');
             setDescription(articleToEdit.description || '');
             setAuthor(articleToEdit.author || '');
             setCategories(articleToEdit.categories ? articleToEdit.categories.join(', ') : '');
-            setImageUrl(articleToEdit.enclosure.link || '');
+            setImageUrl(articleToEdit.enclosure?.link || '' || articleToEdit.imageUrl );
         } else {
             setTitle('');
             setDescription('');
