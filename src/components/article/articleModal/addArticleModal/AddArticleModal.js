@@ -10,13 +10,20 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
 
     useEffect(() => {
         if (articleToEdit) {
-            setTitle(articleToEdit.title);
-            setDescription(articleToEdit.description);
-            setAuthor(articleToEdit.author);
-            setCategories(articleToEdit.categories.join(', '));
-            setImageUrl(articleToEdit.imageUrl);
+            setTitle(articleToEdit.title || '');
+            setDescription(articleToEdit.description || '');
+            setAuthor(articleToEdit.author || '');
+            setCategories(articleToEdit.categories ? articleToEdit.categories.join(', ') : '');
+            setImageUrl(articleToEdit.imageUrl || '');
+        } else {
+            setTitle('');
+            setDescription('');
+            setAuthor('');
+            setCategories('');
+            setImageUrl('');
         }
     }, [articleToEdit]);
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,12 +58,13 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                         <label>
                             <input
                                 className="form-input"
-                                placeholder='Title*'
+                                placeholder='Article Title*'
                                 type="text"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
                             />
+
                         </label>
                         <label>
                             <textarea
