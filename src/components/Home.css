@@ -28,11 +28,15 @@
     border-radius: 4px;
     box-sizing: border-box;
 }
-
+.button-container-edit-remove {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
 .remove-article-button {
     background-color: rgb(202, 70, 70);
     color: white;
-    width: 100px;
+    width: 80px;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -44,3 +48,21 @@
 .remove-article-button:hover {
     background-color: darkred;
 }
+
+
+.edit-article-button {
+    background-color: rgb(36, 180, 151);
+    color: white;
+    width: 80px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-article-button:hover {
+    background-color: rgb(23, 119, 100);
+}
+

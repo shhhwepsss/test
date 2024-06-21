@@ -1,7 +1,7 @@
 import React from 'react';
 import './Article.css';
 
-const Article = ({ article, openModal, removeArticle }) => {
+const Article = ({ article, openModal, removeArticle,openEditModal }) => {
 
     
     const truncateTitle = (title, maxLength) => {
@@ -50,12 +50,20 @@ const Article = ({ article, openModal, removeArticle }) => {
                     <div className="article-author">{article.author || 'No Author'}</div>
                     <div className="article-date">{formatDate(article.pubDate || new Date())}</div>
                 </div>
+                <div className='button-container-edit-remove'>
+                   <button 
+                    className="edit-article-button" 
+                    onClick={() => openEditModal(article)}
+                >
+                    Edit
+                </button> 
                 <button 
                     className="remove-article-button" 
                     onClick={() => removeArticle(article.id)}
                 >
                     Remove
                 </button>
+            </div>
             </div>
         </div>
     );
