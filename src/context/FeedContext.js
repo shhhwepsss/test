@@ -7,6 +7,8 @@ export const FeedProvider = ({ children }) => {
     const [feeds, setFeeds] = useState([]);
     const [articles, setArticles] = useState([]);
 
+ 
+
     useEffect(() => {
         const loadInitialFeed = async () => {
             try {
