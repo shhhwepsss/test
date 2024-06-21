@@ -6,7 +6,7 @@ import AddArticleModal from './article/articleModal/addArticleModal/AddArticleMo
 import './Home.css';
 
 const Home = () => {
-    const { articles, addArticle, removeArticle } = useContext(FeedContext);
+    const { articles, addArticle, removeArticle, editArticle } = useContext(FeedContext);
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [showAddArticleModal, setShowAddArticleModal] = useState(false);
@@ -16,15 +16,27 @@ const Home = () => {
         setShowAddArticleModal(false);
     };
 
+    const handleEditArticle = (updatedArticle) => {
+        editArticle(updatedArticle);
+        setShowAddArticleModal(false);
+    };
+
     const handleOpenModal = (article) => {
         setSelectedArticle(article);
     };
 
     const handleCloseModal = () => {
         setSelectedArticle(null);
+        setShowAddArticleModal(false);
     };
 
     const handleOpenAddArticleModal = () => {
+        setSelectedArticle(null);
+        setShowAddArticleModal(true);
+    };
+
+    const handleOpenEditArticleModal = (article) => {
+        setSelectedArticle(article);
         setShowAddArticleModal(true);
     };
 
@@ -37,7 +49,7 @@ const Home = () => {
     return (
         <div>
             <header className="header">
-
+                <div className="search-container">
                     <input
                         className='filter'
                         type="text"
@@ -48,26 +60,31 @@ const Home = () => {
                     <div className='button-container'>
                         <button className='create-article-button' onClick={handleOpenAddArticleModal}>Add new article</button>
                     </div>
-
+                </div>
             </header>
             <div className="articles-grid">
                 {filteredArticles.map(article => (
                     <Article 
-                        key={article.id} 
+                        key={article.pubDate} 
                         article={article} 
                         openModal={handleOpenModal} 
                         removeArticle={removeArticle} 
+                        openEditModal={handleOpenEditArticleModal}
                     />
                 ))}
             </div>
 
-            {selectedArticle && <ArticleModal article={selectedArticle} closeModal={handleCloseModal} />}
-
             {showAddArticleModal && (
                 <AddArticleModal
-                    closeModal={() => setShowAddArticleModal(false)}
+                    closeModal={handleCloseModal}
                     handleAddArticle={handleAddArticle}
+                    handleEditArticle={handleEditArticle}
+                    articleToEdit={selectedArticle}
                 />
+            )}
+
+            {selectedArticle && !showAddArticleModal && (
+                <ArticleModal article={selectedArticle} closeModal={handleCloseModal} />
             )}
         </div>
     );
