@@ -8,8 +8,6 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
     const [categories, setCategories] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
-    console.log('articleToEdit',articleToEdit)
-    console.log('imageUrl',imageUrl)
 
     useEffect(() => {
         if (articleToEdit) {
