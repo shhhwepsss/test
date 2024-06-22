@@ -1,36 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Modal.css';
 
 const ArticleModal = ({ article, closeModal }) => {
+    const [excerpt, setExcerpt] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchExcerpt = async (url) => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await fetch('/webparser', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await response.json();
+                console.log('data')
+                if (data && data.excerpt) {
+                    setExcerpt(data.excerpt);
+                } else {
+                    setError("Can't get full article, please click on 'Read more'");
+                }
+            } catch (error) {
+                setError("Can't get full article, please click on 'Read more'");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchExcerpt(article.link);
+    }, [article.link]);
+
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains('modal-background')) {
             closeModal();
-        }
-    };
-
-    const openArticle = async (url) => {
-        try {
-            const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url })
-            });
-            const data = await response.json();
-            console.log(data)
-            return data.content; 
-        } catch (error) {
-            console.error("Failed to fetch article content", error);
-            return null;
-        }
-    };
-
-    const handleReadMoreClick = async (e) => {
-        e.preventDefault();
-        const content = await openArticle(article.link);
-        if (content) {
-            const newWindow = window.open();
-            newWindow.document.write(content);
-            newWindow.document.close();
         }
     };
 
@@ -44,9 +49,12 @@ const ArticleModal = ({ article, closeModal }) => {
                     <div className="article-image" style={{ backgroundImage: `url(${article.imageUrl || article.enclosure?.link})` }}></div>
                     <div className='article-content'>
                         <h2>{article.title}</h2>
-                        <p className="article-description">{article.description}</p>
+                
+                        {error && <p className="error">{error}</p>}
+                        <p className="article-description">{excerpt || article.description}</p>
+                        {loading && <p>Loading...</p>}
                         <div>
-                            <a href="#" onClick={handleReadMoreClick} target="_blank" rel="noopener noreferrer">Read more</a>
+                            <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
                         </div>
                     </div>
                 </div>
