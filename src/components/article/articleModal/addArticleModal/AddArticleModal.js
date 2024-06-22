@@ -13,7 +13,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
         if (articleToEdit) {
             setTitle(articleToEdit.title || '');
             setDescription(articleToEdit.description || '');
-            setAuthor(articleToEdit.author || '');
+            setAuthor(articleToEdit.author || '' );
             setCategories(articleToEdit.categories ? articleToEdit.categories.join(', ') : '');
             setImageUrl(articleToEdit.enclosure?.link || '' || articleToEdit.imageUrl );
         } else {

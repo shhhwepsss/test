@@ -11,7 +11,7 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('/webparser', {
+                const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url })
@@ -20,17 +20,18 @@ const ArticleModal = ({ article, closeModal }) => {
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
-                    setError("Can't get full article, please click on 'Read more'");
+                    setError("'Read more'.");
                 }
             } catch (error) {
-                setError("Can't get full article, please click on 'Read more'");
+                setError(" 'Read more'.");
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchExcerpt(article.link);
     }, [article.link]);
+    
 
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains('modal-background')) {
