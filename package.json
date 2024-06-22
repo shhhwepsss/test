@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-   "proxy": "https://uptime-mercury-api.azurewebsites.net",
+
   "eslintConfig": {
     "extends": [
       "react-app",
