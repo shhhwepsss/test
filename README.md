@@ -1,8 +1,8 @@
 # Lolo v5
 
-<img src="https://github.com/TigerTimofey/lolo/assets/119110538/60c10437-c558-483f-882e-d8067301cf75" width="300" alt="lolo1">
-<img src="https://github.com/TigerTimofey/lolo/assets/119110538/8ee245f8-50c0-4f74-a415-b685a91a07b4" width="300" alt="lolo2">
-<img src="https://github.com/TigerTimofey/lolo/assets/119110538/7cc05e76-4d3b-44e5-b2cd-04edf51b07df" width="310" alt="lolo3">
+<img src="https://github.com/TigerTimofey/lolo/assets/119110538/60c10437-c558-483f-882e-d8067301cf75" width="200" alt="lolo1">
+<img src="https://github.com/TigerTimofey/lolo/assets/119110538/8ee245f8-50c0-4f74-a415-b685a91a07b4" width="200" alt="lolo2">
+<img src="https://github.com/TigerTimofey/lolo/assets/119110538/7cc05e76-4d3b-44e5-b2cd-04edf51b07df" width="210" alt="lolo3">
 
 ## `About project`
 This project is a technical assignment at Up-time company and represents a news website that uses RSS data.
