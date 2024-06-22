@@ -13,7 +13,8 @@ const ArticleModal = ({ article, closeModal }) => {
             try {
                 const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest' },
                     body: JSON.stringify({ url })
                 });
                 const data = await response.json();
