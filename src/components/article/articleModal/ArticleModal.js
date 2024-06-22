@@ -13,21 +13,21 @@ const ArticleModal = ({ article, closeModal }) => {
             try {
 
                 //for localhost req
-                const response = await fetch('/webparser', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url }),
-                    mode: 'cors'
-                });
-
-                //for vercel req
-                // const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
+                // const response = await fetch('/webparser', {
                 //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json',
-                //      },
-                //     body: JSON.stringify({ url: url }),
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ url }),
                 //     mode: 'cors'
                 // });
+
+                //for vercel req
+                const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
+                    method: 'POST',
+                    // headers: { 'Content-Type': 'application/json',
+                    //  },
+                    body: JSON.stringify({ url: url }),
+                    mode: 'no-cors'
+                });
                 const data = await response.json();
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
