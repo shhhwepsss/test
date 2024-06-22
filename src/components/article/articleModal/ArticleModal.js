@@ -13,10 +13,9 @@ const ArticleModal = ({ article, closeModal }) => {
             try {
                 const response = await fetch('/webparser', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'https://lolo-fawn.vercel.app'
-                     },
-                    body: JSON.stringify({ url })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url }),
+                         mode: 'cors'
                 });
                 const data = await response.json();
                 if (data && data.excerpt) {
