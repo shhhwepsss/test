@@ -11,28 +11,28 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
+                const response = await fetch('/webparser', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest' },
+                        'Access-Control-Allow-Origin': 'https://lolo-fawn.vercel.app'
+                     },
                     body: JSON.stringify({ url })
                 });
                 const data = await response.json();
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
-                    setError("'Read more'.");
+                    setError("Can't get full article, please click on 'Read more'");
                 }
             } catch (error) {
-                setError(" 'Read more'.");
+                setError("Can't get full article, please click on 'Read more'");
             } finally {
                 setLoading(false);
             }
         };
-    
+
         fetchExcerpt(article.link);
     }, [article.link]);
-    
 
     const handleBackgroundClick = (e) => {
         if (e.target.classList.contains('modal-background')) {
