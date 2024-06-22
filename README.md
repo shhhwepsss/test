@@ -11,7 +11,7 @@ This project is a technical assignment at Up-time company and represents a news 
 
 The key features of the application include:
 
-1. The application allows you to fetch articles from a specified RSS link.
+1. The application allows you to fetch articles from a specified RSS link. 
 2. The application includes the ability to create new articles, edit, and delete both created and retrieved articles.
 3. Each article can be opened in a custom modal window.
 4. All articles should be ordered by date (newest first).
