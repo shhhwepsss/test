@@ -17,7 +17,6 @@ const ArticleModal = ({ article, closeModal }) => {
                     body: JSON.stringify({ url })
                 });
                 const data = await response.json();
-                console.log('data')
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
@@ -49,9 +48,8 @@ const ArticleModal = ({ article, closeModal }) => {
                     <div className="article-image" style={{ backgroundImage: `url(${article.imageUrl || article.enclosure?.link})` }}></div>
                     <div className='article-content'>
                         <h2>{article.title}</h2>
-                
-                        {error && <p className="error">{error}</p>}
                         <p className="article-description">{excerpt || article.description}</p>
+                        {error && <p className="error">{error}</p>}
                         {loading && <p>Loading...</p>}
                         <div>
                             <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
