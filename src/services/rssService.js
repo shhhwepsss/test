@@ -9,4 +9,3 @@ export const fetchRSSFeed = async (url) => {
         throw error;
     }
 };
-
