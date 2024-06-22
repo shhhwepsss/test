@@ -11,12 +11,23 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
+
+                //for localhost req
+                const response = await fetch('/webparser', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url: url }),
+                    body: JSON.stringify({ url }),
                     mode: 'cors'
                 });
+
+                //for vercel req
+                // const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json',
+                //      },
+                //     body: JSON.stringify({ url: url }),
+                //     mode: 'cors'
+                // });
                 const data = await response.json();
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
