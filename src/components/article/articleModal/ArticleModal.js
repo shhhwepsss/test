@@ -22,10 +22,6 @@ const ArticleModal = ({ article, closeModal }) => {
 
                 //for vercel req
                 const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
-                    method: 'POST',
-                    // headers: { 'Content-Type': 'application/json',
-                    //  },
-                    body: JSON.stringify({ url: url }),
                     mode: 'no-cors'
                 });
                 const data = await response.json();
