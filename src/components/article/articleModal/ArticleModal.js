@@ -11,18 +11,23 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
+
+                //for localhost req
+                // const response = await fetch('/webparser', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ url }),
+                //     mode: 'cors'
+                // });
+
+                //for vercel req
                 const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ url }),
+                    headers: { 'Content-Type': 'application/json',
+                     },
+                    body: JSON.stringify({ url: url }),
+                    mode: 'no-cors'
                 });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
                 const data = await response.json();
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
@@ -30,7 +35,6 @@ const ArticleModal = ({ article, closeModal }) => {
                     setError("Can't get full article, please click on 'Read more'");
                 }
             } catch (error) {
-                console.error("Error fetching the article excerpt:", error);
                 setError("Can't get full article, please click on 'Read more'");
             } finally {
                 setLoading(false);
