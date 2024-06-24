@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Modal.css';
 
 const ArticleModal = ({ article, closeModal }) => {
@@ -11,30 +12,19 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
+                const response = await axios.post('/webparser', { url });
 
-                //for localhost req
-                const response = await fetch('/webparser', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url }),
-                    mode: 'cors'
-                });
-
-                //for vercel req
-                // const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json',
-                //      },
-                //     body: JSON.stringify({ url: url }),
-                //     mode: 'no-cors'
-                // });
-                const data = await response.json();
-                if (data && data.excerpt) {
-                    setExcerpt(data.excerpt);
+                const data = response.data;
+                console.log(data);
+                if (data && data.excerpt
+                ) {
+                    setExcerpt(data.excerpt
+                    );
                 } else {
                     setError("Can't get full article, please click on 'Read more'");
                 }
             } catch (error) {
+                console.error(error);
                 setError("Can't get full article, please click on 'Read more'");
             } finally {
                 setLoading(false);
