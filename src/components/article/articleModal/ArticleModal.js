@@ -12,14 +12,12 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.post('/webparser', { url });
+                const response = await axios.post('https://uptime-mercury-api.azurewebsites.net/webparser', { url });
 
                 const data = response.data;
                 console.log(data);
-                if (data && data.excerpt
-                ) {
-                    setExcerpt(data.excerpt
-                    );
+                if (data && data.excerpt) {
+                    setExcerpt(data.excerpt);
                 } else {
                     setError("Can't get full article, please click on 'Read more'");
                 }
