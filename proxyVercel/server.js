@@ -17,7 +17,7 @@ app.post('/webparser', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': '/' 
+'Accept': '*/*' 
       },
       body: JSON.stringify({ url })
     });
