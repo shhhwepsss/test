@@ -12,24 +12,24 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                console.log("Sending request to backend with URL:", url);
-                const response = await axios.post('/webparser', { url,  });
-                console.log("Response from backend:", response.data);
-
-                const data = response.data;
-                if (data && data.excerpt) {
-                    setExcerpt(data);
-                } else {
-                    setError("Can't get full article, please click on 'Read more'");
-                }
-            } catch (error) {
-                console.error("Error fetching excerpt:", error);
+              console.log("Sending request to backend with URL:", url);
+              const response = await axios.post('/webparser', { url }); // Ensure `url` is correctly sent
+              console.log("Response from backend:", response.data);
+          
+              const data = response.data;
+              if (data && data.excerpt) {
+                setExcerpt(data);  // Assuming `data.excerpt` contains the required data
+              } else {
                 setError("Can't get full article, please click on 'Read more'");
+              }
+            } catch (error) {
+              console.error("Error fetching excerpt:", error);
+              setError("Can't get full article, please click on 'Read more'");
             } finally {
-                setLoading(false);
+              setLoading(false);
             }
-        };
-
+          };
+          
         fetchExcerpt(article.link);
     }, [article.link]);
 
