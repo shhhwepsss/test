@@ -17,11 +17,11 @@ const ArticleModal = ({ article, closeModal }) => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
-                    mode: 'no-cors'
+                    mode: 'cors'
                 });
 
+
                 const data = await response.json();
-                console.log(data)
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
