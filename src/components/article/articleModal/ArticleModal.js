@@ -18,7 +18,7 @@ const ArticleModal = ({ article, closeModal }) => {
 
                 const data = response.data;
                 if (data && data.excerpt) {
-                    setExcerpt(data.excerpt);
+                    setExcerpt(data);
                 } else {
                     setError("Can't get full article, please click on 'Read more'");
                 }
@@ -46,10 +46,10 @@ const ArticleModal = ({ article, closeModal }) => {
                     &times;
                 </div>
                 <div className="modal-window">
-                    <div className="article-image" style={{ backgroundImage: `url(${article.imageUrl || article.enclosure?.link})` }}></div>
+                    <div className="article-image" style={{ backgroundImage: `url(${excerpt.load_image_url || article.imageUrl || article.enclosure?.link})` }}></div>
                     <div className='article-content'>
-                        <h2>{article.title}</h2>
-                        <p className="article-description">{excerpt || article.description}</p>
+                        <h2>{excerpt.title || article.title}</h2>
+                        <p className="article-description">{excerpt.excerpt || article.description}</p>
                         {error && <p className="error">{error}</p>}
                         {loading && <p>Loading...</p>}
                         <div>

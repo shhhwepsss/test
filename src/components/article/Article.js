@@ -3,7 +3,7 @@ import './Article.css';
 
 const Article = ({ article, openModal, removeArticle,openEditModal }) => {
 
-    
+
     const truncateTitle = (title, maxLength) => {
         if (title.length > maxLength) {
             return title.slice(0, maxLength) + '...';
@@ -29,7 +29,6 @@ const Article = ({ article, openModal, removeArticle,openEditModal }) => {
                 return 'yellow';
         }
     };
-
     return (
         <div className="article-card">
             <div 

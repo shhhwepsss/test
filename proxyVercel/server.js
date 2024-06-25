@@ -16,7 +16,8 @@ app.post('/webparser', async (req, res) => {
     const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': '/' 
       },
       body: JSON.stringify({ url })
     });
