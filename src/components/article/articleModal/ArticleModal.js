@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import './Modal.css';
 
 const ArticleModal = ({ article, closeModal }) => {
-    const [excerpt, setExcerpt] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [excerpt, setExcerpt] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const fetchExcerpt = async (url) => {
             setLoading(true);
             setError(null);
             try {
                 console.log("Sending request to backend with URL:", url);
-                const response = await axios.get('/webparser', { params: { url } });
+                const response = await axios.post('/webparser', { url });
                 console.log("Response from backend:", response.data);
 
                 const data = response.data;
