@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Modal.css';
 
 const ArticleModal = ({ article, closeModal }) => {
@@ -11,23 +12,18 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
+                console.log("Sending request to backend with URL:", url);
+                const response = await axios.post('/webparser', { url });
+                console.log("Response from backend:", response.data);
 
-                //for localhost req
-                const response = await fetch('/webparser', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url }),
-                    mode: 'cors'
-                });
-
-
-                const data = await response.json();
+                const data = response.data;
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
                     setError("Can't get full article, please click on 'Read more'");
                 }
             } catch (error) {
+                console.error("Error fetching excerpt:", error);
                 setError("Can't get full article, please click on 'Read more'");
             } finally {
                 setLoading(false);
