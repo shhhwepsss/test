@@ -9,15 +9,15 @@ app.use(express.json());
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-app.get('/webparser', async (req, res) => {
-  const { url } = req.query;
+app.post('/webparser', async (req, res) => {
+  const { url } = req.body;
   console.log("Received request for URL:", url);
   try {
     const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-'Accept': '*/*' 
+        'Accept': '/' 
       },
       body: JSON.stringify({ url })
     });

@@ -13,7 +13,7 @@ const ArticleModal = ({ article, closeModal }) => {
             setError(null);
             try {
                 console.log("Sending request to backend with URL:", url);
-                const response = await axios.get('/webparser', { params: { url } });
+                const response = await axios.post('/webparser', { url,  });
                 console.log("Response from backend:", response.data);
 
                 const data = response.data;
