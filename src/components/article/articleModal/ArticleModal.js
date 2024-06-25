@@ -12,17 +12,18 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.post(`https://proxy-vercel-blush.vercel.app/webparser`, { url });
+                console.log("Sending request to backend with URL:", url);
+                const response = await axios.post('/webparser', { url });
+                console.log("Response from backend:", response.data);
 
                 const data = response.data;
-                console.log(data);
                 if (data && data.excerpt) {
                     setExcerpt(data.excerpt);
                 } else {
                     setError("Can't get full article, please click on 'Read more'");
                 }
             } catch (error) {
-                console.error(error);
+                console.error("Error fetching excerpt:", error);
                 setError("Can't get full article, please click on 'Read more'");
             } finally {
                 setLoading(false);
