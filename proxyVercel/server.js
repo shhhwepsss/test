@@ -1,28 +1,39 @@
 const express = require('express');
 const cors = require('cors');
+const fetch = require('node-fetch');
 
 const app = express();
+
 const port =  3008;
+
 
 app.use(cors({ origin: "*" }));
 app.use(express.json());
+
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 app.post('/webparser', async (req, res) => {
   const { url } = req.query;
+
   console.log("Received request for URL:", url);
+  
   try {
     const response = await fetch('https://uptime-mercury-api.azurewebsites.net/webparser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+
         'Accept': '*/*' 
+
       },
       body: JSON.stringify({ url })
     });
+    
     const data = await response.json();
     console.log("Response from Mercury API:", data);
+    
+    // Return the data received from the external API
     res.status(response.status).json(data);
   } catch (error) {
     console.error('Error fetching from Mercury API:', error);
@@ -30,6 +41,7 @@ app.post('/webparser', async (req, res) => {
   }
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Proxy server running on port ${port}`);
 });
