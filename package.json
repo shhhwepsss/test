@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"https://proxy-vercel-blush.vercel.app/",
+"proxy":"https://uptime-mercury-api.azurewebsites.net",
   "eslintConfig": {
     "extends": [
       "react-app",

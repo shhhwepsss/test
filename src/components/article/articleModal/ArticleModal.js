@@ -1,35 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import './Modal.css';
 
 const ArticleModal = ({ article, closeModal }) => {
-    const [excerpt, setExcerpt] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [excerpt, setExcerpt] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const fetchExcerpt = async (url) => {
             setLoading(true);
             setError(null);
             try {
-              console.log("Sending request to backend with URL:", url);
-              const response = await axios.post('/webparser', { url }); // Ensure `url` is correctly sent
-              console.log("Response from backend:", response.data);
-          
-              const data = response.data;
-              if (data && data.excerpt) {
-                setExcerpt(data);  // Assuming `data.excerpt` contains the required data
-              } else {
-                setError("Can't get full article, please click on 'Read more'");
-              }
+                
+                console.log("Sending request to backend with URL:", url);
+                const response = await axios.post('/webparser', { url });
+                console.log("Response from backend:", response.data );
+
+                const data = response.data;
+                if (data && data.excerpt) {
+                    setExcerpt(data);
+                } else {
+                    setError("Can't get full article, please click on 'Read more'");
+                }
             } catch (error) {
-              console.error("Error fetching excerpt:", error);
-              setError("Can't get full article, please click on 'Read more'");
+                console.error("Error fetching excerpt:", error);
+                setError("Can't get full article, please click on 'Read more'");
             } finally {
-              setLoading(false);
+                setLoading(false);
             }
-          };
-          
+        };
+
         fetchExcerpt(article.link);
     }, [article.link]);
 

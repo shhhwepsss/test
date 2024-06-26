@@ -3,14 +3,19 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 
 const app = express();
-const port = 3001;
+
+const port =  3008;
+
 
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// Define your route to handle the POST request and proxy to external API
+
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 app.post('/webparser', async (req, res) => {
-  const { url } = req.body;
+  const { url } = req.query;
+
   console.log("Received request for URL:", url);
   
   try {
@@ -18,7 +23,9 @@ app.post('/webparser', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+
+        'Accept': '*/*' 
+
       },
       body: JSON.stringify({ url })
     });
@@ -38,3 +45,4 @@ app.post('/webparser', async (req, res) => {
 app.listen(port, () => {
   console.log(`Proxy server running on port ${port}`);
 });
+
