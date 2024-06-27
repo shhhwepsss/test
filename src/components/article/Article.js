@@ -1,14 +1,28 @@
 import React from 'react';
 import './Article.css';
 
-const Article = ({ article, openModal, removeArticle,openEditModal }) => {
-
+const Article = ({ article, openModal,openEditModal,fetchExistingArticles }) => {
 
     const truncateTitle = (title, maxLength) => {
         if (title.length > maxLength) {
             return title.slice(0, maxLength) + '...';
         }
         return title;
+    };
+
+    const removeArticle = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/articles/${article._id}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete article');
+            }
+
+        } catch (error) {
+            console.error('Error deleting article:', error);
+        }
+        fetchExistingArticles()
     };
 
     const formatDate = (dateString) => {
@@ -49,6 +63,8 @@ const Article = ({ article, openModal, removeArticle,openEditModal }) => {
                     <div className="article-author">{article.author || 'No Author'}</div>
                     <div className="article-date">{formatDate(article.pubDate || new Date())}</div>
                 </div>
+                {!article.link ? (
+                <>
                 <div className='button-container-edit-remove'>
                    <button 
                     className="edit-article-button" 
@@ -58,11 +74,13 @@ const Article = ({ article, openModal, removeArticle,openEditModal }) => {
                 </button> 
                 <button 
                     className="remove-article-button" 
-                    onClick={() => removeArticle(article.id)}
+                    onClick={removeArticle}
                 >
                     Remove
                 </button>
             </div>
+            </>
+) : null}
             </div>
         </div>
     );

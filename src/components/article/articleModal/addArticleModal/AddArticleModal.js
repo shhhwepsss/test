@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './AddArticleModal.css';
 
-const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit }) => {
+const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit,fetchExistingArticles }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [author, setAuthor] = useState('');
     const [categories, setCategories] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
-
     useEffect(() => {
         if (articleToEdit) {
             setTitle(articleToEdit.title || '');
             setDescription(articleToEdit.description || '');
-            setAuthor(articleToEdit.author || '' );
+            setAuthor(articleToEdit.author || '');
             setCategories(articleToEdit.categories ? articleToEdit.categories.join(', ') : '');
-            setImageUrl(articleToEdit.enclosure?.link || '' || articleToEdit.imageUrl );
+            setImageUrl(articleToEdit.enclosure?.link || articleToEdit.imageUrl || '');
         } else {
             setTitle('');
             setDescription('');
@@ -24,6 +23,35 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             setImageUrl('');
         }
     }, [articleToEdit]);
+
+
+
+    const submitArticle = async (article) => {
+        try {
+            const url = articleToEdit ? `http://localhost:4000/articles/${articleToEdit._id}` : 'http://localhost:4000/articles';
+            const method = articleToEdit ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(article)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add/update article');
+            }
+            const data = await response.json();
+            if (articleToEdit) {
+                handleEditArticle(data);
+            } else {
+                handleAddArticle(data);
+            }
+        } catch (error) {
+            console.error('Error adding/updating article:', error);
+        }
+        fetchExistingArticles()
+    };
     
 
     const handleSubmit = (e) => {
@@ -37,13 +65,8 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             imageUrl,
             pubDate: articleToEdit ? articleToEdit.pubDate : new Date().toISOString()
         };
-
-        if (articleToEdit) {
-            handleEditArticle(article);
-        } else {
-            handleAddArticle(article);
-        }
-
+        submitArticle(article);
+    
         closeModal();
     };
 
@@ -52,9 +75,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             <div className="modal-active" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-close" onClick={closeModal}>&times;</div>
                 <div className="modal-window">
-<h2>{articleToEdit ? 'Edit Article' : 'Add New Article'}</h2>
-
-    
+                    <h2>{articleToEdit ? 'Edit Article' : 'Add New Article'}</h2>
                     <form onSubmit={handleSubmit}>
                         <label>
                             <input
@@ -65,11 +86,10 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
                             />
-
                         </label>
                         <label>
                             <textarea
-                                   placeholder='Description*'
+                                placeholder='Description*'
                                 className="form-textarea"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -78,7 +98,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                         </label>
                         <label>
                             <input
-                                 placeholder='Author*'
+                                placeholder='Author*'
                                 className="form-input"
                                 type="text"
                                 value={author}
@@ -88,18 +108,16 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                         </label>
                         <label>
                             <input
-                                      placeholder='Categories (separate with commas)'
+                                placeholder='Categories (separate with commas)'
                                 className="form-input"
                                 type="text"
                                 value={categories}
                                 onChange={(e) => setCategories(e.target.value)}
-
                             />
-
                         </label>
                         <label>
                             <input
-                            placeholder=' Image URL*'
+                                placeholder='Image URL*'
                                 className="form-input"
                                 type="text"
                                 value={imageUrl}
@@ -114,6 +132,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                     </form>
                 </div>
             </div>
+
         </div>
     );
 };
