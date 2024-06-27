@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './AddArticleModal.css';
 
-const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit }) => {
+const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit,fetchExistingArticles }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [author, setAuthor] = useState('');
     const [categories, setCategories] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [existingArticles, setExistingArticles] = useState([]);
 
     useEffect(() => {
         if (articleToEdit) {
@@ -23,22 +22,9 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             setCategories('');
             setImageUrl('');
         }
-
-        fetchExistingArticles();
     }, [articleToEdit]);
 
-    const fetchExistingArticles = async () => {
-        try {
-            const response = await fetch('http://localhost:4000/articles');
-            if (!response.ok) {
-                throw new Error('Failed to fetch articles');
-            }
-            const data = await response.json();
-            setExistingArticles(data); 
-        } catch (error) {
-            console.error('Error fetching articles:', error);
-        }
-    };
+
 
     const submitArticle = async (article) => {
         try {
@@ -65,6 +51,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
         } catch (error) {
             console.error('Error adding/updating article:', error);
         }
+        fetchExistingArticles()
     };
 
     const handleSubmit = (e) => {
@@ -78,7 +65,6 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             imageUrl,
             pubDate: articleToEdit ? articleToEdit.pubDate : new Date().toISOString()
         };
-
         submitArticle(article);
         closeModal();
     };

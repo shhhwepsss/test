@@ -51,12 +51,20 @@ const ArticleModal = ({ article, closeModal }) => {
                     <div className='article-content'>
                         <h2>{excerpt.title || article.title}</h2>
                         <p className="article-description">{excerpt.excerpt || article.description}</p>
-                        {error && <p className="error">{error}</p>}
-                        {loading && <p>Loading...</p>}
-                        <div>
-                            <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
-                        </div>
+
+                        {article.link ? (
+    <>
+        {error && <p className="error">{error}</p>}
+        {loading && <p>Loading...</p>}
+        {!error && !loading && (
+            <div>
+                <a href={article.link} target="_blank" rel="noopener noreferrer">Read more</a>
+            </div>
+        )}
+    </>
+) : null}
                     </div>
+
                 </div>
             </div>
         </div>
@@ -64,3 +72,4 @@ const ArticleModal = ({ article, closeModal }) => {
 };
 
 export default ArticleModal;
+

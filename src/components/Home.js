@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FeedContext } from '../context/FeedContext';
 import Article from './article/Article';
 import ArticleModal from './article/articleModal/ArticleModal';
@@ -10,15 +10,47 @@ const Home = () => {
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [showAddArticleModal, setShowAddArticleModal] = useState(false);
+    const [error, setError] = useState('');
+    const [existingArticles, setExistingArticles] = useState([]);
 
-    const handleAddArticle = (newArticle) => {
-        addArticle(newArticle);
-        setShowAddArticleModal(false);
+    const fetchExistingArticles = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/articles');
+            if (!response.ok) {
+                throw new Error('Failed to fetch articles');
+            }
+            const data = await response.json();
+            setExistingArticles(data);
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+    };
+    useEffect(() => {
+
+        fetchExistingArticles();
+    }, []);
+
+
+    const handleAddArticle = async (newArticle) => {
+        try {
+            await addArticle(newArticle);
+            setShowAddArticleModal(false);
+            setError('');
+        } catch (error) {
+            console.error('Error adding article:', error.message);
+            setError('Failed to add article. Please try again later.');
+        }
     };
 
-    const handleEditArticle = (updatedArticle) => {
-        editArticle(updatedArticle);
-        setShowAddArticleModal(false);
+    const handleEditArticle = async (updatedArticle) => {
+        try {
+            await editArticle(updatedArticle);
+            setShowAddArticleModal(false);
+            setError('');
+        } catch (error) {
+            console.error('Error editing article:', error.message);
+            setError('Failed to edit article. Please try again later.');
+        }
     };
 
     const handleOpenModal = (article) => {
@@ -28,16 +60,19 @@ const Home = () => {
     const handleCloseModal = () => {
         setSelectedArticle(null);
         setShowAddArticleModal(false);
+        setError('');
     };
 
     const handleOpenAddArticleModal = () => {
         setSelectedArticle(null);
         setShowAddArticleModal(true);
+        setError('');
     };
 
     const handleOpenEditArticleModal = (article) => {
         setSelectedArticle(article);
         setShowAddArticleModal(true);
+        setError('');
     };
 
     const filteredArticles = filter
@@ -45,6 +80,8 @@ const Home = () => {
             article.categories.some(category => category.toLowerCase().includes(filter.toLowerCase()))
         ).sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
         : articles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+        const combinedArticles = [...existingArticles, ...filteredArticles];
 
     return (
         <div>
@@ -63,7 +100,7 @@ const Home = () => {
                 </div>
             </header>
             <div className="articles-grid">
-                {filteredArticles.map(article => (
+                {combinedArticles.map(article => (
                     <Article 
                         key={article.pubDate} 
                         article={article} 
@@ -80,11 +117,21 @@ const Home = () => {
                     handleAddArticle={handleAddArticle}
                     handleEditArticle={handleEditArticle}
                     articleToEdit={selectedArticle}
+                    setError={setError}
+                    fetchExistingArticles={fetchExistingArticles}
+                    
                 />
             )}
 
             {selectedArticle && !showAddArticleModal && (
                 <ArticleModal article={selectedArticle} closeModal={handleCloseModal} />
+            )}
+
+
+            {error && (
+                <div className="error-message">
+                    {error}
+                </div>
             )}
         </div>
     );
