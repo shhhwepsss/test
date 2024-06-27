@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AddArticleModal.css';
 
-const AddArticleModal = ({ closeModal, articleToEdit }) => {
+const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [author, setAuthor] = useState('');
@@ -12,9 +12,9 @@ const AddArticleModal = ({ closeModal, articleToEdit }) => {
         if (articleToEdit) {
             setTitle(articleToEdit.title || '');
             setDescription(articleToEdit.description || '');
-            setAuthor(articleToEdit.author || '' );
+            setAuthor(articleToEdit.author || '');
             setCategories(articleToEdit.categories ? articleToEdit.categories.join(', ') : '');
-            setImageUrl(articleToEdit.imageUrl || '' );
+            setImageUrl(articleToEdit.enclosure?.link || articleToEdit.imageUrl || '');
         } else {
             setTitle('');
             setDescription('');
@@ -38,11 +38,13 @@ const AddArticleModal = ({ closeModal, articleToEdit }) => {
             }
             const data = await response.json();
             console.log('Article added:', data);
+            // Assuming you have a function to update state with newly added article
+            handleAddArticle(data);
         } catch (error) {
             console.error('Error adding article:', error);
         }
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const article = {
@@ -52,11 +54,10 @@ const AddArticleModal = ({ closeModal, articleToEdit }) => {
             categories: categories.split(',').map(category => category.trim()),
             imageUrl,
         };
-    
+
         submitArticle(article);
         closeModal();
     };
-    
 
     return (
         <div className="modal-background" onClick={closeModal}>

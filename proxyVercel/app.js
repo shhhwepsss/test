@@ -29,3 +29,9 @@ app.post('/articles', (req, res) => {
     .then(result => res.status(201).json(result))
     .catch(err => res.status(500).json({ error: err.message }));
 });
+
+app.get('/articles', (req, res) => {
+  Article.find()
+    .then(articles => res.json(articles))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
