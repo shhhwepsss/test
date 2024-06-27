@@ -6,7 +6,7 @@ import AddArticleModal from './article/articleModal/addArticleModal/AddArticleMo
 import './Home.css';
 
 const Home = () => {
-    const { articles, addArticle } = useContext(FeedContext);
+    const { articles } = useContext(FeedContext);
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [showAddArticleModal, setShowAddArticleModal] = useState(false);
@@ -33,7 +33,7 @@ const Home = () => {
 
     const handleAddArticle = async (newArticle) => {
         try {
-            await addArticle(newArticle);
+
             setShowAddArticleModal(false);
             setError('');
         } catch (error) {

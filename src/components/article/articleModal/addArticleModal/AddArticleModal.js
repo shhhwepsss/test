@@ -66,6 +66,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             pubDate: articleToEdit ? articleToEdit.pubDate : new Date().toISOString()
         };
         submitArticle(article);
+    
         closeModal();
     };
 

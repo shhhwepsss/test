@@ -12,8 +12,8 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
+
                 const response = await axios.post('/webparser', { url });
-                
                 const data = response.data;
                 if (data && data.excerpt) {
                     setExcerpt(data);

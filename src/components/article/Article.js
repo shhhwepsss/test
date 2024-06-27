@@ -3,8 +3,6 @@ import './Article.css';
 
 const Article = ({ article, openModal,openEditModal,fetchExistingArticles }) => {
 
-
-
     const truncateTitle = (title, maxLength) => {
         if (title.length > maxLength) {
             return title.slice(0, maxLength) + '...';
@@ -77,8 +75,6 @@ const Article = ({ article, openModal,openEditModal,fetchExistingArticles }) => 
                 <button 
                     className="remove-article-button" 
                     onClick={removeArticle}
-                    // onClick={() => removeArticle(article.id)}
-
                 >
                     Remove
                 </button>

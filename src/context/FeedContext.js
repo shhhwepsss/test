@@ -18,12 +18,8 @@ export const FeedProvider = ({ children }) => {
         loadInitialFeed();
     }, []);
 
-    const addArticle = (newArticle) => {
-        setArticles([...articles, newArticle]);
-    };
-
     return (
-        <FeedContext.Provider value={{  articles, addArticle ,  }}>
+        <FeedContext.Provider value={{  articles }}>
             {children}
         </FeedContext.Provider>
     );
