@@ -6,7 +6,7 @@ import AddArticleModal from './article/articleModal/addArticleModal/AddArticleMo
 import './Home.css';
 
 const Home = () => {
-    const { articles, addArticle, removeArticle, editArticle } = useContext(FeedContext);
+    const { articles, addArticle } = useContext(FeedContext);
     const [filter, setFilter] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [showAddArticleModal, setShowAddArticleModal] = useState(false);
@@ -42,9 +42,8 @@ const Home = () => {
         }
     };
 
-    const handleEditArticle = async (updatedArticle) => {
+    const handleEditArticle = async () => {
         try {
-            await editArticle(updatedArticle);
             setShowAddArticleModal(false);
             setError('');
         } catch (error) {
@@ -105,8 +104,8 @@ const Home = () => {
                         key={article.pubDate} 
                         article={article} 
                         openModal={handleOpenModal} 
-                        removeArticle={removeArticle} 
                         openEditModal={handleOpenEditArticleModal}
+                        fetchExistingArticles={fetchExistingArticles}
                     />
                 ))}
             </div>

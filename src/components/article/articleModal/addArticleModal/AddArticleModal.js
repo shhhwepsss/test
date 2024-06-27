@@ -42,7 +42,6 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                 throw new Error('Failed to add/update article');
             }
             const data = await response.json();
-            console.log('Article added/updated:', data);
             if (articleToEdit) {
                 handleEditArticle(data);
             } else {
@@ -53,6 +52,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
         }
         fetchExistingArticles()
     };
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();

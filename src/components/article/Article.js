@@ -1,7 +1,7 @@
 import React from 'react';
 import './Article.css';
 
-const Article = ({ article, openModal, removeArticle,openEditModal, existingArticles }) => {
+const Article = ({ article, openModal,openEditModal,fetchExistingArticles }) => {
 
 
 
@@ -10,6 +10,21 @@ const Article = ({ article, openModal, removeArticle,openEditModal, existingArti
             return title.slice(0, maxLength) + '...';
         }
         return title;
+    };
+
+    const removeArticle = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/articles/${article._id}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete article');
+            }
+
+        } catch (error) {
+            console.error('Error deleting article:', error);
+        }
+        fetchExistingArticles()
     };
 
     const formatDate = (dateString) => {
@@ -61,7 +76,9 @@ const Article = ({ article, openModal, removeArticle,openEditModal, existingArti
                 </button> 
                 <button 
                     className="remove-article-button" 
-                    onClick={() => removeArticle(article.id)}
+                    onClick={removeArticle}
+                    // onClick={() => removeArticle(article.id)}
+
                 >
                     Remove
                 </button>

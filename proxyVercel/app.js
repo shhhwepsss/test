@@ -56,3 +56,16 @@ app.put('/articles/:id', (req, res) => {
     })
     .catch(err => res.status(500).json({ error: err.message }));
 });
+
+app.delete('/articles/:id', (req, res) => {
+  const { id } = req.params;
+
+  Article.findByIdAndDelete(id)
+    .then(deletedArticle => {
+      if (!deletedArticle) {
+        return res.status(404).json({ error: 'Article not found' });
+      }
+      res.json({ message: 'Article deleted successfully' });
+    })
+    .catch(err => res.status(500).json({ error: err.message }));
+});

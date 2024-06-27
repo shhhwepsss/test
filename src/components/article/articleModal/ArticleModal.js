@@ -12,11 +12,8 @@ const ArticleModal = ({ article, closeModal }) => {
             setLoading(true);
             setError(null);
             try {
-                
-                console.log("Sending request to backend with URL:", url);
                 const response = await axios.post('/webparser', { url });
-                console.log("Response from backend:", response.data );
-
+                
                 const data = response.data;
                 if (data && data.excerpt) {
                     setExcerpt(data);
