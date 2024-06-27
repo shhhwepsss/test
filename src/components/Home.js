@@ -13,6 +13,7 @@ const Home = () => {
 
     const handleAddArticle = (newArticle) => {
         addArticle(newArticle);
+        
         setShowAddArticleModal(false);
     };
 
