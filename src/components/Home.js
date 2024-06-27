@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { FeedContext } from '../context/FeedContext';
 import Article from './article/Article';
 import ArticleModal from './article/articleModal/ArticleModal';
@@ -6,12 +6,12 @@ import AddArticleModal from './article/articleModal/addArticleModal/AddArticleMo
 import './Home.css';
 
 const Home = () => {
-    const { articles } = useContext(FeedContext);
-    const [filter, setFilter] = useState('');
-    const [selectedArticle, setSelectedArticle] = useState(null);
-    const [showAddArticleModal, setShowAddArticleModal] = useState(false);
-    const [error, setError] = useState('');
-    const [existingArticles, setExistingArticles] = useState([]);
+    const { articles } = React.useContext(FeedContext);
+    const [filter, setFilter] = React.useState('');
+    const [selectedArticle, setSelectedArticle] = React.useState(null);
+    const [showAddArticleModal, setShowAddArticleModal] = React.useState(false);
+    const [error, setError] = React.useState('');
+    const [existingArticles, setExistingArticles] = React.useState([]);
 
     const fetchExistingArticles = async () => {
         try {
@@ -25,7 +25,7 @@ const Home = () => {
             console.error('Error fetching articles:', error);
         }
     };
-    useEffect(() => {
+    React.useEffect(() => {
 
         fetchExistingArticles();
     }, []);

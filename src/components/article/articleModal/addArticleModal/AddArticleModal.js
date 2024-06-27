@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './AddArticleModal.css';
 
 const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, articleToEdit,fetchExistingArticles }) => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [author, setAuthor] = useState('');
-    const [categories, setCategories] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const [title, setTitle] = React.useState('');
+    const [description, setDescription] = React.useState('');
+    const [author, setAuthor] = React.useState('');
+    const [categories, setCategories] = React.useState('');
+    const [imageUrl, setImageUrl] = React.useState('');
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (articleToEdit) {
             setTitle(articleToEdit.title || '');
             setDescription(articleToEdit.description || '');

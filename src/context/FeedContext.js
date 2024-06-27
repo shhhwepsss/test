@@ -1,12 +1,12 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React from 'react';
 import { fetchRSSFeed } from '../services/rssService';
 
-export const FeedContext = createContext();
+export const FeedContext = React.createContext();
 
 export const FeedProvider = ({ children }) => {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = React.useState([]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const loadInitialFeed = async () => {
             try {
                 const initialFeed = await fetchRSSFeed('https://flipboard.com/@raimoseero/feed-nii8kd0sz.rss');

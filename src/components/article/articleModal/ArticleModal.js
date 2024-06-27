@@ -7,7 +7,7 @@ const ArticleModal = ({ article, closeModal }) => {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(null);
 
-    React.useEffect(() => {
+  React.useEffect(() => {
         const fetchExcerpt = async (url) => {
             setLoading(true);
             setError(null);

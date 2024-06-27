@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FeedProvider } from './context/FeedContext';
 import Home from './components/Home';
 import ArticleModal from './components/article/articleModal/ArticleModal';
 import './components/Home.css';
 
 const App = () => {
-    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [selectedArticle, setSelectedArticle] = React.useState(null);
 
     const openModal = (article) => {
         setSelectedArticle(article);
