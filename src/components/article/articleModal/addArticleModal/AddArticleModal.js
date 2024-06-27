@@ -7,6 +7,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
     const [author, setAuthor] = useState('');
     const [categories, setCategories] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [existingArticles, setExistingArticles] = useState([]);
 
     useEffect(() => {
         if (articleToEdit) {
@@ -22,37 +23,60 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
             setCategories('');
             setImageUrl('');
         }
+
+        fetchExistingArticles();
     }, [articleToEdit]);
+
+    const fetchExistingArticles = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/articles');
+            if (!response.ok) {
+                throw new Error('Failed to fetch articles');
+            }
+            const data = await response.json();
+            setExistingArticles(data); 
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+    };
 
     const submitArticle = async (article) => {
         try {
-            const response = await fetch('http://localhost:4000/articles', {
-                method: 'POST',
+            const url = articleToEdit ? `http://localhost:4000/articles/${articleToEdit._id}` : 'http://localhost:4000/articles';
+            const method = articleToEdit ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(article)
             });
             if (!response.ok) {
-                throw new Error('Failed to add article');
+                throw new Error('Failed to add/update article');
             }
             const data = await response.json();
-            console.log('Article added:', data);
-            // Assuming you have a function to update state with newly added article
-            handleAddArticle(data);
+            console.log('Article added/updated:', data);
+            if (articleToEdit) {
+                handleEditArticle(data);
+            } else {
+                handleAddArticle(data);
+            }
         } catch (error) {
-            console.error('Error adding article:', error);
+            console.error('Error adding/updating article:', error);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const article = {
+            ...articleToEdit,
             title,
             description,
             author,
             categories: categories.split(',').map(category => category.trim()),
             imageUrl,
+            pubDate: articleToEdit ? articleToEdit.pubDate : new Date().toISOString()
         };
 
         submitArticle(article);
@@ -121,6 +145,7 @@ const AddArticleModal = ({ closeModal, handleAddArticle, handleEditArticle, arti
                     </form>
                 </div>
             </div>
+
         </div>
     );
 };

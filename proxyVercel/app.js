@@ -35,3 +35,24 @@ app.get('/articles', (req, res) => {
     .then(articles => res.json(articles))
     .catch(err => res.status(500).json({ error: err.message }));
 });
+
+
+app.put('/articles/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, imageUrl, description, categories, author } = req.body;
+
+  Article.findByIdAndUpdate(id, {
+    title,
+    imageUrl,
+    description,
+    categories,
+    author
+  }, { new: true })
+    .then(updatedArticle => {
+      if (!updatedArticle) {
+        return res.status(404).json({ error: 'Article not found' });
+      }
+      res.json(updatedArticle);
+    })
+    .catch(err => res.status(500).json({ error: err.message }));
+});
