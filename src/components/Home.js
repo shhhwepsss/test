@@ -74,13 +74,14 @@ const Home = () => {
         setError('');
     };
 
-    const filteredArticles = filter
-        ? articles.filter(article =>
-            article.categories.some(category => category.toLowerCase().includes(filter.toLowerCase()))
-        ).sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
-        : articles.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    const rssArticles = filter
+    ? articles.filter(article =>
+        article.categories.some(category => category.toLowerCase().includes(filter.toLowerCase()))
+    )
+    : articles;
 
-        const combinedArticles = [...existingArticles, ...filteredArticles];
+const combinedArticles = [...existingArticles, ...rssArticles].sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
 
     return (
         <div>

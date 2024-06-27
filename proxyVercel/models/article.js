@@ -14,7 +14,7 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
-    categories: {  // Changed from 'category' to 'categories'
+    categories: { 
         type: [String],
         required: true
     },
@@ -22,7 +22,7 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
-    pubDate: {  // Added 'pubDate' to match front-end data
+    pubDate: {  
         type: Date,
         default: Date.now
     }
