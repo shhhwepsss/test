@@ -12,7 +12,7 @@ const Article = ({ article, openModal,openEditModal,fetchExistingArticles }) => 
 
     const removeArticle = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/articles/${article._id}`, {
+            const response = await fetch(`https://backend-zeta-gules.vercel.app/articles/${article._id}`, {
                 method: 'DELETE'
             });
             if (!response.ok) {
