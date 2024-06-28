@@ -15,7 +15,7 @@ const Home = () => {
 
     const fetchExistingArticles = async () => {
         try {
-            const response = await fetch('http://localhost:4000/articles');
+            const response = await fetch('http://localhost:4001/articles');
             if (!response.ok) {
                 throw new Error('Failed to fetch articles');
             }

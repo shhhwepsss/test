@@ -10,7 +10,7 @@ export const FeedProvider = ({ children }) => {
         const loadInitialFeed = async () => {
             try {
                 const initialFeed = await fetchRSSFeed('https://flipboard.com/@raimoseero/feed-nii8kd0sz.rss');
-                setArticles(initialFeed.items.map(item => ({ ...item, id: item.guid || item.pubDate.slice(-2) })));
+                // setArticles(initialFeed.items.map(item => ({ ...item, id: item.guid || item.pubDate.slice(-2) })));
             } catch (error) {
                 console.error("Error loading initial feed", error);
             }
