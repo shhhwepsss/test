@@ -12,10 +12,10 @@ const Home = () => {
     const [showAddArticleModal, setShowAddArticleModal] = React.useState(false);
     const [error, setError] = React.useState('');
     const [existingArticles, setExistingArticles] = React.useState([]);
-
+    console.log(process.env.REACT_APP_IS_PROD)
     const fetchExistingArticles = async () => {
         try {
-            const response = await fetch('http://localhost:4001/articles');
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/articles`);
             if (!response.ok) {
                 throw new Error('Failed to fetch articles');
             }
