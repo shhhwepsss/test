@@ -15,11 +15,11 @@ const Home = () => {
 
     const fetchExistingArticles = async () => {
         try {
-            const response = await fetch('https://backend-zeta-gules.vercel.app/articles');
+            const response = await fetch('http://localhost:4000/articles');
             if (!response.ok) {
                 throw new Error('Failed to fetch articles');
             }
-            const data = await response.json();
+            const data = await response.json();console.log(data)
             setExistingArticles(data);
         } catch (error) {
             console.error('Error fetching articles:', error);
